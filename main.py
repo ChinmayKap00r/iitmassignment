@@ -1,5 +1,5 @@
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -15,9 +15,12 @@ app.add_middleware(
 
 # Load data from JSON file
 with open("q-vercel-python.json", "r") as file:
-    student_marks = json.load(file)
+    data = json.load(file)
+
+# Convert list to dictionary for fast lookups
+student_marks = {student["name"]: student["marks"] for student in data}
 
 @app.get("/api")
-def get_marks(name: list[str]):
+def get_marks(name: list[str] = Query(...)):
     marks = [student_marks.get(n, 0) for n in name]
     return {"marks": marks}
