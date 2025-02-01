@@ -14,7 +14,7 @@ app.add_middleware(
 )
 
 # Load data from JSON file
-with open("vercel1.json", "r") as file:
+with open("verceljson.json", "r") as file:
     data = json.load(file)
 
 # Convert list to dictionary for fast lookups
